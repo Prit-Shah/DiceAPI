@@ -1,0 +1,9 @@
+.playing{
+    font-size: larger;
+    background-color: antiquewhite;
+    
+}
+
+.hide{
+    display: none !important;
+}
