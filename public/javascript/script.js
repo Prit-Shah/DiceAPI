@@ -1,3 +1,5 @@
+const socket=io('http://localhost:3003')
+let room;
 let iscreater=false;
 function createuser(){
     const creatediv = document.getElementById("createuser");
@@ -11,7 +13,6 @@ const player=function(n){
 const Room=function(n){
     this.name=n
 };
-
 
 let players=new Array();
 function addplayer(){
@@ -106,40 +107,25 @@ function hold(){
 
 }
 
-function createroom(){
-    iscreater=true;
-    const creatediv = document.getElementById("createroom");
-    creatediv.insertAdjacentHTML("beforeend",'<div class="row" id="newroom"><div class="col-4"><input class=" form-control mt-3 w-1" type="text" id="roomname"></insert><button class="btn btn-light mt-1 text-right" onclick="addroom()">Add</button></div></div>');
-}
-
 function addroom(){
-    const newplayer = new player("roomcreater");
-    players.push(newplayer);
-    console.log({players})
-    let newroom = new Room(document.getElementById("roomname").value);
-    const creatediv = document.getElementById("createroom");
-    creatediv.removeChild(document.getElementById("newroom"));  
-    creatediv.innerHTML=`
-    <div class="container">
-        <h5>Room Name: ${newroom.name}</h5>
-        <h4>Players joined: ${players.length}</h4>
-    </div>
-    `;
+    iscreater=true;
+    room = document.getElementById("roomname").value;
+    socket.emit('start',room,"roomcreater")           
 }
 
 function joinroom(){
-    const creatediv = document.getElementById("joinroom");
-    creatediv.insertAdjacentHTML("beforeend",'<div class="row" id="joinroom"><div class="col-4"><input class=" form-control mt-3 w-1" type="text" id="roomname"></insert><button class="btn btn-light mt-1 text-right" onclick="addroom()">Add</button></div></div>');
-    const newplayer = new player("roomjoiner");
-    players.push(newplayer);
-    console.log({players})
-    let newroom = new Room(document.getElementById("roomname").value);   
-    creatediv.removeChild(document.getElementById("joinroom"));  
-    creatediv.innerHTML=`
-    <div class="container">
-        <h5>Room Name: ${newroom.name}</h5>
-        <h4>Players joined: ${players.length}</h4>
-    </div>
-    `;
+    // const newplayer = new player("roomjoiner");
+    // players.push(newplayer);
+    // console.log({players})
+    room = document.getElementById("roomname").value;
+    socket.emit('playerjoined',room,"roomjoiner")                 
 }
+        
 
+    
+socket.on('playerjoined',(pls)=>{
+
+        players = pls;
+        console.log('player joined',pls)
+        console.log(players)
+})   
