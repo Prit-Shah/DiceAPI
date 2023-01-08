@@ -1,4 +1,4 @@
-const socket=io('http://localhost:3003')
+const socket=io('https://dice-api.onrender.com/')
 let room;
 let iscreater=false;
 let gameStarted=false;
