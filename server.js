@@ -60,5 +60,8 @@ socket.on('connection',(sock)=>{
     sock.on('setme',(name)=>{
          socket.in(name).emit('setme',room.getplayers(name).length)       
     })
+    sock.on('reset',(name)=>{
+        socket.in(name).emit('reset',room.getplayers(name))
+    })
 })
 

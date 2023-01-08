@@ -1,7 +1,12 @@
+body{
+    background-image: url('../images/bg.png');
+}
+
 .playing{
     font-size: larger;
-    background-color: antiquewhite;
-    
+    background-color: #212529;
+    border-radius: 8px;
+    color:white;
 }
 
 .hide{
