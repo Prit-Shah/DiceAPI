@@ -4,9 +4,7 @@ const io=require('socket.io');
 const server=http.Server(api);
 const room=require('./Model/Rooms.model');
 let ROLLING_DICE='Rolling... 🎲️';
-
 const PORT = process.env.PORT || 3003;
-
 server.listen(PORT,{ 
     cors: { 
       origin: '*',
@@ -16,11 +14,8 @@ server.listen(PORT,{
 console.log(`server started at ${PORT} ...`)
 const socket=io(server)
 socket.on('connection',(sock)=>{
-    console.log(`User Connected`)
     sock.on('disconnecting',()=>{
-        console.log(sock.rooms.values())
-        if(Array.from(sock.rooms.values())[1]){
-            console.log(Array.from(sock.rooms.values())[1]);
+        if(Array.from(sock.rooms.values())[1]){        
             socket.to(Array.from(sock.rooms.values())[1]).emit('someoneleft',true);}
     })
     sock.on('start',(name,player)=>{

@@ -6,7 +6,7 @@ let rollingdice = 'Rolling... 🎲️';
 let me = 0;
 let turn = 1;
 let playername = "Player";
-let MAX_SCORE = 100;
+let MAX_SCORE = 10;
 const rollsound = new Audio("../audio/gamemisc_dice-roll-on-wood_jaku5-37414.mp3");
 const holdsound = new Audio('../audio/Ohno.mp3')
 function createuser() {
@@ -81,8 +81,7 @@ function dispscores() {
         document.getElementById("dice").innerHTML = dicenumber;       
         if (dicenumber > 1) {
             scorecount += dicenumber;
-            document.getElementById("scorecount").innerHTML = scorecount;
-            
+            document.getElementById("scorecount").innerHTML = scorecount;            
         } else {
             holdsound.play();
             if (me == turn) {
@@ -94,7 +93,7 @@ function dispscores() {
     setTimeout(()=>{
         document.getElementById("btnroll").disabled = false;
         document.getElementById("btnhold").disabled = false;
-    },1200);
+    },1300);
     document.getElementById("dice").innerHTML = rollingdice;
 }
 function rolldice() {
@@ -189,6 +188,8 @@ socket.on("iscreater", (val) => {
 });
 socket.on("reset", (pls) => {
     players = pls;
+    scorecount=0;
+    document.getElementById("dice").innerHTML="";
     displayplayers();
 });
 
