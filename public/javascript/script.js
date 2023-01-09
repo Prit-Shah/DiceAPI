@@ -89,10 +89,12 @@ function dispscores() {
                 scorecount = 0;
                 hold();
             }
-        }
+        }        
+    }, 1000);
+    setTimeout(()=>{
         document.getElementById("btnroll").disabled = false;
         document.getElementById("btnhold").disabled = false;
-    }, 1000);
+    },1200);
     document.getElementById("dice").innerHTML = rollingdice;
 }
 function rolldice() {
