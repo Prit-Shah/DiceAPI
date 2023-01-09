@@ -6,8 +6,8 @@ const room=require('./Model/Rooms.model');
 let ROLLING_DICE='Rolling... 🎲️';
 
 const PORT = process.env.PORT || 3003;
- 
-server.listen(PORT,{
+
+server.listen(PORT,{ 
     cors: { 
       origin: '*',
       methods: ['GET', 'POST']
@@ -17,6 +17,12 @@ console.log(`server started at ${PORT} ...`)
 const socket=io(server)
 socket.on('connection',(sock)=>{
     console.log(`User Connected`)
+    sock.on('disconnecting',()=>{
+        console.log(sock.rooms.values())
+        if(Array.from(sock.rooms.values())[1]){
+            console.log(Array.from(sock.rooms.values())[1]);
+            socket.to(Array.from(sock.rooms.values())[1]).emit('someoneleft',true);}
+    })
     sock.on('start',(name,player)=>{
         if(!room.checkRoom(name)){
             room.addRoom(name)
@@ -24,7 +30,7 @@ socket.on('connection',(sock)=>{
             room.addplayer(name,player)
             socket.in(name).emit('playerjoined',room.getplayers(name))
             socket.in(name).emit('iscreater',true)            
-        }       
+        }        
         else{
             sock.emit('roomexists',name)
         }         
@@ -37,8 +43,7 @@ socket.on('connection',(sock)=>{
         }
         else{
             sock.emit('roomnotexists',true)
-        }
-               
+        }               
     })
     sock.on('gamestarted',(name)=>{        
         sock.join(name)
@@ -57,9 +62,11 @@ socket.on('connection',(sock)=>{
         socket.in(name).emit('hold',pls)
     }) 
     sock.on('setme',(name)=>{
+        sock.join(name)
          socket.in(name).emit('setme',room.getplayers(name).length)       
     })
     sock.on('reset',(name)=>{
+        sock.join(name)
         socket.in(name).emit('reset',room.getplayers(name))
     })
 })
