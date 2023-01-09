@@ -14,10 +14,10 @@ server.listen(PORT,{
 console.log(`server started at ${PORT} ...`)
 const socket=io(server)
 socket.on('connection',(sock)=>{
-    sock.on('disconnecting',()=>{
-        if(Array.from(sock.rooms.values())[1]){        
-            socket.to(Array.from(sock.rooms.values())[1]).emit('someoneleft',true);}
-    })
+    //sock.on('disconnecting',()=>{
+       // if(Array.from(sock.rooms.values())[1]){        
+        //    socket.to(Array.from(sock.rooms.values())[1]).emit('someoneleft',true);}
+   // })
     sock.on('start',(name,player)=>{
         if(!room.checkRoom(name)){
             room.addRoom(name)
