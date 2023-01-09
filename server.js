@@ -4,7 +4,6 @@ const io=require('socket.io');
 const server=http.Server(api);
 const room=require('./Model/Rooms.model');
 let ROLLING_DICE='Rolling... 🎲️';
-let MAX_SCORE=0;
 
 const PORT = process.env.PORT || 3003;
  

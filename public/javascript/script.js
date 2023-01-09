@@ -7,6 +7,8 @@ let me = 0;
 let turn = 1;
 let playername = "Player";
 let MAX_SCORE = 100;
+const rollsound = new Audio("../audio/gamemisc_dice-roll-on-wood_jaku5-37414.mp3");
+const holdsound=new Audio('../audio/Ohno.mp3')
 
 function createuser() {
     const creatediv = document.getElementById("createuser");
@@ -29,7 +31,6 @@ let players = new Array();
 //     players.push(newplayer);
 //     const creatediv = document.getElementById("createuser");
 //     creatediv.removeChild(document.getElementById("newplayer"));
-//     console.log(totalplayers(players));
 //     displayplayers(players);
 // }
 function load() {
@@ -41,7 +42,6 @@ function load() {
 
 function Changename() {
     playername = document.getElementById("plname").value;
-    console.log(document.getElementById("plname").value, playername);
     document.getElementById("addbtn").disabled = false;
     document.getElementById("startbtn").disabled = false;
     document.getElementById("plnamebtn").disabled = true;
@@ -97,8 +97,8 @@ function changeplaying() {
 let dicenumber;
 let scorecount = 0;
 async function play() {
-    let audio = new Audio("../audio/gamemisc_dice-roll-on-wood_jaku5-37414.mp3");
-    audio.play();
+    
+    rolldice.play();
     document.getElementById("btnroll").disabled = true;
     document.getElementById("btnhold").disabled = true;
     socket.emit("dicenumber", room, await rolldice());
@@ -113,8 +113,8 @@ function dispscores() {
             scorecount += dicenumber;
             document.getElementById("scorecount").innerHTML = scorecount;
         } else {
-            let audio=new Audio('../audio/Ohno.mp3')
-                audio.play();
+            
+                holdsound.play();
             if (me == turn) {
                 
                 scorecount = 0;
@@ -170,7 +170,6 @@ function checkwin() {
 
 socket.on("playerjoined", (pls) => {
     players = pls;
-    // console.log('player joined',pls)
     displayplayers(pls);
     socket.emit("setme", room);
 });
