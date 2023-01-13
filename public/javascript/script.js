@@ -135,6 +135,11 @@ function checkwin() {
         return p.score >= MAX_SCORE;
     });
 }
+
+function exitroom(){
+    socket.emit("exitroom",room);
+}
+
 socket.on("playerjoined", (pls) => {
     players = pls;
     displayplayers();
@@ -151,6 +156,7 @@ socket.on("gamestarted", (val) => {
         document.getElementById("addbtn").disabled = true;
         document.getElementById("startbtn").disabled = true;
     }
+    iscreater&&document.getElementById("createroom").classList.add("hide");document.getElementById("exitroom").classList.remove("hide");
 });
 socket.on("rollingdice", (val) => {
     rollingdice = val;
@@ -176,6 +182,9 @@ socket.on("hold", async (pls) => {
 });
 socket.on("setme", (me1) => {
     if (me === 0) me = me1;
+    document.getElementById("createroom").classList.add("hide")
+    document.getElementById("exitroom").classList.remove("hide")
+
 });
 socket.on("roomexists", (r) => {
     document.getElementById("message").innerHTML = "Room exists";
@@ -197,5 +206,13 @@ socket.on("someoneleft",(val)=>{
     if(val){
         if(confirm("someoneleft")) window.location=window.location;
         else  window.location=window.location;      
+    }
+})
+
+socket.on("exitroom",(val)=>{
+    if(val){
+    if(confirm('someoneleft'))
+        window.location=window.location;
+    else window.location=window.location;
     }
 })

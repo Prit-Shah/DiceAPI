@@ -64,5 +64,9 @@ socket.on('connection',(sock)=>{
         sock.join(name)
         socket.in(name).emit('reset',room.getplayers(name))
     })
+    sock.on('exitroom',(name)=>{
+        sock.join(name)
+        socket.in(name).emit('exitroom',true)
+    })
 })
 
