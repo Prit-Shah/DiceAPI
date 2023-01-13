@@ -6,7 +6,7 @@ let rollingdice = 'Rolling... 🎲️';
 let me = 0;
 let turn = 1;
 let playername = "Player";
-let MAX_SCORE = 10;
+let MAX_SCORE = 100;
 const rollsound = new Audio("../audio/gamemisc_dice-roll-on-wood_jaku5-37414.mp3");
 const holdsound = new Audio('../audio/Ohno.mp3')
 function createuser() {
